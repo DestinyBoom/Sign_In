@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- 全局setting配置，根据需要添加 -->
+	
+	<!-- 配置别名 -->
+	<typeAliases>
+		<!-- 批量别名定义 
+		指定包名，mybatis自动扫描包中的pojo类，自动定义别名，别名就是类名（首字母大写或小写都可以）-->
+		<package name="com.boom.pojo"/>
+	</typeAliases>
+	
+	<!-- 配置分页插件 -->
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageHelper">
+			<!-- 设置数据库类型 -->
+			<property name="dialect" value="mysql"/>
+		</plugin>
+	</plugins>
+	
+	<!-- 配置mapper
+	由于使用spring和mybatis的整合包进行mapper扫描，这里不需要配置了。
+	必须遵循：Mapper.xml和mapper.java文件同名且在一个目录
+	也可以在配置session工场的时候配置扫描的mapper路径 -->
+	<!-- <mappers>
+		
+	</mappers>  --> 
+	
+</configuration>

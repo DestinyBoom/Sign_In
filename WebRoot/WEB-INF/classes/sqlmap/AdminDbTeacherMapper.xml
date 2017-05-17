@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boom.admin.mapper.AdminDbTeacherMapper">
+	<resultMap type="com.boom.pojo.DbTeachercustomer" id="DbTeacherCustomerResultMap">
+		<id column="tid" property="tid"/>
+		<result column="tname" property="tname"/>
+		<result column="tnumber" property="tnumber"/>
+		<result column="tsex" property="tsex"/>
+		<result column="tage" property="tage"/>
+		<association property="dbAcademy"  javaType="com.boom.pojo.DbAcademy">
+			<!-- id：关联查询用户的唯 一标识
+			column：指定唯 一标识用户信息的列
+			javaType：映射到user的哪个属性
+			 -->
+			<id column="aid" property="aid"/>
+			<result column="aname" property="aname"/>	
+		</association>
+	</resultMap>
+	
+	<!-- 查询所有老师信息 -->
+	<select id="findAll" resultMap="DbTeacherCustomerResultMap">
+		SELECT
+			db_Teacher.*,
+			db_academy.aname
+		FROM
+			db_Teacher,
+			db_academy
+		WHERE db_Teacher.aid = db_academy.aid
+	</select>
+</mapper>

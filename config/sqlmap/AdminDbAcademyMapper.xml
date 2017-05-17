@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boom.admin.mapper.AdminDbAcademyMapper">
+	
+	<!-- 查询所有学院信息 -->
+	<select id="findAll" resultType="com.boom.pojo.DbAcademy">
+		SELECT * FROM db_academy
+	</select>
+	
+	<!-- 添加学院 -->
+	<insert id="addAcademy" parameterType="com.boom.pojo.DbAcademy">
+		insert into db_academy (aname) VALUES (#{aname})
+	</insert>
+	
+	<!-- 修改学院信息 -->
+	<update id="updateAcademy" parameterType="com.boom.pojo.DbAcademy">
+		update db_academy 
+		<set>
+	      <if test="aname != null" >
+	        aname = #{aname},
+	      </if>
+	    </set>
+	    where aid = #{aid}
+	</update>
+	
+	<!-- 删除学院信息 -->
+	<delete id="deleteAcademy">
+    	delete from db_academy where aid in
+    	<foreach collection="array" open="(" close=")" separator="," item="ids">
+            #{ids}
+        </foreach>
+  	</delete>
+</mapper>

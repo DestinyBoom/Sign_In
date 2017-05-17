@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boom.admin.mapper.AdminDbClassMapper">
+	
+	<resultMap type="com.boom.pojo.DbClassCustomer" id="DbClassCustomerResultMap">
+		<id column="cid" property="cid"/>
+		<result column="cname" property="cname"/>
+		<association property="dbAcademy"  javaType="com.boom.pojo.DbAcademy">
+			<id column="aid" property="aid"/>
+			<result column="aname" property="aname"/>	
+		</association>
+	</resultMap>
+	
+	<!-- 查询所有学生信息 -->
+	<!-- <select id="findAll" resultType="com.boom.pojo.DbStudent">
+		SELECT * FROM db_student
+	</select> -->
+	<select id="findAll" resultMap="DbClassCustomerResultMap">
+		SELECT
+			db_class.*,
+			db_academy.aname			
+		FROM
+			db_class,
+			db_academy
+			
+		WHERE db_class.aid = db_academy.aid
+	</select>
+	
+	<!-- 添加学生 -->
+	<insert id="addClass" parameterType="com.boom.pojo.DbClass">
+		insert into db_class
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="cname != null" >
+	        cname,
+	      </if>
+	      <if test="aid != null" >
+	        aid,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="cname != null" >
+	        #{cname},
+	      </if>	      
+	      <if test="aid != null" >
+	        #{aid},
+	      </if>
+	    </trim>
+	</insert>
+	
+	<!-- 修改学生信息 -->
+	<update id="updateClass" parameterType="com.boom.pojo.DbClass">
+		update db_class 
+		<set>
+	      <if test="cname != null" >
+	        cname = #{cname},
+	      </if>
+	      <if test="aid != null" >
+	        aid = #{aid},
+	      </if>
+	    </set>
+	    where cid = #{cid}
+	</update>
+	
+	<!-- 删除学生信息 -->
+	<delete id="deleteClass">
+    	delete from db_class where cid in
+    	<foreach collection="array" open="(" close=")" separator="," item="ids">
+            #{ids}
+        </foreach>
+  	</delete>
+  	
+</mapper>

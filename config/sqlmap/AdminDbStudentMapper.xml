@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boom.admin.mapper.AdminDbStudentMapper">
+	
+	<resultMap type="com.boom.pojo.DbStudentCustomer" id="DbStudentCustomerResultMap">
+		<id column="sid" property="sid"/>
+		<result column="sname" property="sname"/>
+		<result column="snumber" property="snumber"/>
+		<result column="ssex" property="ssex"/>
+		<result column="sage" property="sage"/>
+		<result column="sdate" property="sdate"/>
+		<result column="isSchool" property="isSchool"/>
+		<association property="dbAcademy"  javaType="com.boom.pojo.DbAcademy">
+			<!-- id：关联查询用户的唯 一标识
+			column：指定唯 一标识用户信息的列
+			javaType：映射到user的哪个属性
+			 -->
+			<id column="aid" property="aid"/>
+			<result column="aname" property="aname"/>	
+		</association>
+		<collection property="dbClass" ofType="com.boom.pojo.DbClass">
+		 	<!-- id：订单明细唯 一标识
+		 	property:要将订单明细的唯 一标识 映射到cn.itcast.mybatis.po.Orderdetail的哪个属性
+		 	  -->
+		 	<id column="cid" property="cid"/>
+		 	<result column="cname" property="cname"/>
+		 </collection>
+	</resultMap>
+	
+	<!-- 查询所有学生信息 -->
+	<!-- <select id="findAll" resultType="com.boom.pojo.DbStudent">
+		SELECT * FROM db_student
+	</select> -->
+	<select id="findAll" resultMap="DbStudentCustomerResultMap">
+		SELECT
+			db_student.*,
+			db_academy.aname,
+			db_class.cname
+		FROM
+			db_student,
+			db_academy,
+			db_class
+		WHERE db_student.aid = db_academy.aid AND db_student.cid = db_class.cid
+	</select>
+	
+	<!-- 添加学生 -->
+	<insert id="addStudent" parameterType="com.boom.pojo.DbStudent">
+		insert into db_student
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="sname != null" >
+	        sname,
+	      </if>
+	      <if test="snumber != null" >
+	        snumber,
+	      </if>
+	      <if test="ssex != null" >
+	        ssex,
+	      </if>
+	      <if test="sage != null" >
+	        sage,
+	      </if>
+	      <if test="sdate != null" >
+	        sdate,
+	      </if> 
+	      <if test="cid != null" >
+	        cid,
+	      </if>
+	      <if test="aid != null" >
+	        aid,
+	      </if>
+	      <if test="isSchool != null" >
+	        isSchool,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="sname != null" >
+	        #{sname},
+	      </if>
+	      <if test="snumber != null" >
+	        #{snumber},
+	      </if>
+	      <if test="ssex != null" >
+	        #{ssex},
+	      </if>
+	      <if test="sage != null" >
+	        #{sage},
+	      </if>
+	      <if test="sdate != null" >
+	        #{sdate},
+	      </if>
+	      <if test="cid != null" >
+	        #{cid},
+	      </if>
+	      <if test="aid != null" >
+	        #{aid},
+	      </if>
+	      <if test="isSchool != null" >
+	        #{isSchool},
+	      </if>
+	    </trim>
+	</insert>
+	
+	<!-- 修改学生信息 -->
+	<update id="updateStudent" parameterType="com.boom.pojo.DbStudent">
+		update db_student 
+		<set>
+	      <if test="sname != null" >
+	        sname = #{sname},
+	      </if>
+	      <if test="snumber != null" >
+	        snumber = #{snumber},
+	      </if>
+	      <if test="ssex != null" >
+	        ssex = #{ssex},
+	      </if>
+	      <if test="sage != null" >
+	        sage = #{sage},
+	      </if>
+	      <if test="sdate != null" >
+	        sdate = #{sdate},
+	      </if>
+	      <if test="cid != null">
+	        cid =  #{cid},
+	      </if>
+	      <if test="aid != null" >
+	        aid = #{aid},
+	      </if>
+	      <if test="isSchool != null">
+	        isSchool = #{isSchool},
+	      </if>
+	    </set>
+	    where sid = #{sid}
+	</update>
+	
+	<!-- 删除学生信息 -->
+	<delete id="deleteStudent">
+    	delete from db_student where sid in
+    	<foreach collection="array" open="(" close=")" separator="," item="ids">
+            #{ids}
+        </foreach>
+  	</delete>
+  	
+  	<!-- 多条件组合查询学生信息 -->
+	<select id="selectStudent" parameterType="com.boom.pojo.DbStudentCustomer" resultMap="DbStudentCustomerResultMap">
+		SELECT 
+			db_student.*,
+			db_academy.aname,
+			db_class.cname
+		FROM
+			db_student,
+			db_academy,
+			db_class
+		<where>
+		<if test="sname != null">
+			and sname like '%${sname}%'
+		</if>
+		<if test="snumber !=null">
+			and snumber like '%${snumber}%'
+		</if>
+		<if test="ssex != null">
+			and ssex = #{ssex}
+		</if>
+		<if test="sage !=null">
+			and sage like '%${sage}%'
+		</if>
+		<if test="sdate != null">
+			and sdate = #{sdate}
+		</if>
+		<if test="cid !=null">
+			and cid = #{db_class.cid}
+		</if>
+		<if test="aid != null">
+			and aid = #{db_academy.aid}
+		</if>
+		<if test="isSchool !=null">
+			and isSchool = #{isSchool}
+		</if>
+			AND db_student.aid = db_academy.aid AND db_student.cid = db_class.cid
+		</where>
+	</select>
+</mapper>

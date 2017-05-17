@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boom.mapper.DbTeacherMapper">
+	
+	<select id="findTeacherByTid" parameterType="com.boom.pojo.DbTeacher" resultType="com.boom.pojo.DbTeacher">
+		SELECT * FROM db_teacher WHERE tid = #{tid}
+	</select>
+	<!-- 按学号查询学生信息 -->
+	<select id="findTeacherByTnumber" parameterType="com.boom.pojo.DbTeacher" resultType="com.boom.pojo.DbTeacher">
+		SELECT * FROM db_teacher WHERE tnumber = #{tnumber}
+	</select>
+	
+	<!-- 插入学生 -->
+	<insert id="insertTeacher" parameterType="com.boom.pojo.DbTeacher">
+		insert into db_teacher (tnumber,tpass,tuuid) values (#{tnumber}, #{tpass}, #{tuuid})
+	</insert>
+	
+	<!-- 保存学生 -->
+	<update id="saveTeacher" parameterType="com.boom.pojo.DbTeacher">
+		update db_teacher 
+		<set>
+	      <if test="tname != null" >
+	        tname = #{tname},
+	      </if>
+	      <if test="tsex != null" >
+	        tsex = #{tsex},
+	      </if>
+	      <if test="tage != null" >
+	        tage = #{tage},
+	      </if>
+	      <if test="tuuid != null">
+	        tuuid =  #{tuuid},
+	      </if>
+	      <if test="aid != null" >
+	        aid = #{aid},
+	      </if>
+	    </set>
+	    where tid = #{tid}
+	</update>
+	
+	<!-- 修改密码 -->
+	<update id="updatepass" parameterType="com.boom.pojo.DbTeacher">
+		update db_teacher set tpass = #{tpass} where tid = #{tid}
+	</update>
+</mapper>

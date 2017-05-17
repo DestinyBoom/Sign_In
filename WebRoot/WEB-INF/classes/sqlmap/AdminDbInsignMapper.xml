@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boom.admin.mapper.AdminDbInsignMapper">
+	
+	
+	<select id="selectByMonthTid" parameterType="com.boom.pojo.DbInSign" resultType="com.boom.pojo.DbInSign">
+		SELECT * FROM db_insign where imonth='${imonth}' and tid= #{tid}
+	</select>
+	
+	<insert id="insert" parameterType="com.boom.pojo.DbInSign">
+		insert into db_insign(imonth,aid,tid) values(#{imonth},#{aid},#{tid})
+	</insert>
+	
+	<update id="updateState" parameterType="com.boom.pojo.DbDay">
+		UPDATE db_insign SET state=1 WHERE tid=#{tid} AND imonth =#{imonth}
+	</update>
+	
+	<update id="updateShouldSign" parameterType="com.boom.pojo.DbDay">
+		UPDATE db_insign SET ishouldSign=ishouldSign+1 WHERE tid=#{tid} AND imonth =#{imonth}
+	</update>
+</mapper>
