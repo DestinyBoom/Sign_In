@@ -1,7 +1,6 @@
 package com.boom.admin.service;
 
 import com.boom.pojo.DbClass;
-import com.boom.utils.PageResult;
 import com.boom.utils.Result;
 
 /**
@@ -12,7 +11,7 @@ import com.boom.utils.Result;
 public interface AdminClassService {
 	
 	//查询
-	PageResult findAll(Integer page);
+	Result findAll();
 	
 	//添加
 	Result addClass(DbClass dbClass);

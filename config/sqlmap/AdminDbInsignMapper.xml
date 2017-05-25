@@ -5,6 +5,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.boom.admin.mapper.AdminDbInsignMapper">
 	
+	<resultMap id="InsignResultMap" type="com.boom.pojo.DbInSignCustomer">
+		<id column="iid" property="iid"/>
+		<result column="imonth" property="ishouldSign"/>
+		<result column="ishouldSign" property="ishouldSign"/>
+		<result column="irealitySign" property="irealitySign"/>
+		<result column="ileaveDays" property="ileaveDays"/>	
+		<association property="dbTeacher"  javaType="com.boom.pojo.DbTeacher">
+			
+			<id column="tid" property="tid"/>
+			<result column="tname" property="tname"/>
+			<result column="tnumber" property="tnumber"/>
+			<result column="tsex" property="tsex"/>
+			<result column="tage" property="tage"/>	
+		</association>	
+		<collection property="dbAcademy" ofType="com.boom.pojo.DbAcademy">
+		 	
+		 	<id column="aid" property="aid"/>
+			<result column="aname" property="aname"/>
+		 </collection>
+	</resultMap>
 	
 	<select id="selectByMonthTid" parameterType="com.boom.pojo.DbInSign" resultType="com.boom.pojo.DbInSign">
 		SELECT * FROM db_insign where imonth='${imonth}' and tid= #{tid}
@@ -17,8 +37,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateState" parameterType="com.boom.pojo.DbDay">
 		UPDATE db_insign SET state=1 WHERE tid=#{tid} AND imonth =#{imonth}
 	</update>
+		
+	<update id="updateCloseSign" parameterType="com.boom.pojo.DbDay">
+		UPDATE db_insign SET state=0 WHERE tid=#{tid} AND imonth =#{imonth}
+	</update>
 	
 	<update id="updateShouldSign" parameterType="com.boom.pojo.DbDay">
 		UPDATE db_insign SET ishouldSign=ishouldSign+1 WHERE tid=#{tid} AND imonth =#{imonth}
 	</update>
+	
+	<select id="findTByMonth" parameterType="com.boom.pojo.DbInSignCustomer" resultMap="InsignResultMap">
+		SELECT
+			db_insign.*,
+			db_teacher.*,
+			db_academy.aname		
+		FROM
+			db_insign,
+			db_teacher,
+			db_academy	
+		WHERE
+		<if test="tid !=null"> 
+			db_insign.tid = #{tid}
+			AND db_teacher.tid = #{tid} AND 
+		</if>
+		<if test="aid !=null">
+			db_insign.aid = #{aid}
+			AND db_teacher.aid = #{aid} AND
+		</if>
+		db_insign.aid = db_academy.aid
+		AND db_insign.tid = db_teacher.tid 
+		AND db_insign.imonth= '${imonth}'	
+	</select>
+	
+	
 </mapper>

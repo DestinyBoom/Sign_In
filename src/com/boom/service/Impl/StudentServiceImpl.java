@@ -25,13 +25,16 @@ public class StudentServiceImpl implements StudentService  {
 	public Result login(DbStudent dbStudent) {
 		try {
 			DbStudent data = dbStudentMapper.findStudentBySnumber(dbStudent);
+			if(data == null){
+				return Result.build(502, "查无此人");
+			}
 			if(data.getSnumber().equals(dbStudent.getSnumber()) && data.getSpass().equals(dbStudent.getSpass())){
-				return Result.ok(data);
+				return Result.build(200, "登录成功", data);
 			}else{
-				return Result.build(500, "学号或密码错误");
+				return Result.build(501, "学号或密码错误");
 			}
 		} catch (Exception e) {
-			return Result.build(500, "学号或密码错误");
+			return Result.build(500, "传入数据有误或服务器错误");
 		}
 		
 	}
@@ -40,10 +43,13 @@ public class StudentServiceImpl implements StudentService  {
 	@Override
 	public Result regist(DbStudent dbStudent) {
 		try {
-			dbStudentMapper.insertStudent(dbStudent);
+			int rows = dbStudentMapper.insertStudent(dbStudent);
+			if(rows == 0){
+				return Result.build(501, "插入失败,用户名重复");
+			}
 			return Result.ok();
 		} catch (Exception e) {
-			return Result.build(500, "插入失败,学号重复或其它");
+			return Result.build(500, "传入数据有误或服务器错误");
 		}
 	}
 	
@@ -51,20 +57,26 @@ public class StudentServiceImpl implements StudentService  {
 	@Override
 	public Result save(DbStudent dbStudent) {
 		try {
-			dbStudentMapper.saveStudent(dbStudent);
+			int rows = dbStudentMapper.saveStudent(dbStudent);
+			if(rows == 0){
+				return Result.build(501, "保存失败,用户名不存在");
+			}
 			return Result.ok();
 		} catch (Exception e) {
-			return Result.build(500, "信息录入失败");
+			return Result.build(500, "传入数据有误或服务器错误");
 		}
 	}
 
 	@Override
 	public Result updatepass(DbStudent dbStudent) {
 		try {
-			dbStudentMapper.updatepass(dbStudent);
+			int rows = dbStudentMapper.updatepass(dbStudent);
+			if(rows == 0){
+				return Result.build(501, "修改失败,用户名不存在");
+			}
 			return Result.ok();
 		} catch (Exception e) {
-			return Result.build(500, "信息录入失败");
+			return Result.build(500, "传入数据有误或服务器错误");
 		}
 	}
 

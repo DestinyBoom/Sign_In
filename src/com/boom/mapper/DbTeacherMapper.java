@@ -11,12 +11,14 @@ public interface DbTeacherMapper {
 
 	DbTeacher findTeacherByTnumber(DbTeacher dbTeacher);
 
-	void insertTeacher(DbTeacher dbTeacher);
+	int insertTeacher(DbTeacher dbTeacher);
 
-	void saveTeacher(DbTeacher dbTeacher);
+	int saveTeacher(DbTeacher dbTeacher);
 
-	void updatepass(DbTeacher dbTeacher);
+	int updatepass(DbTeacher dbTeacher);
 
 	DbTeacher findTeacherByTid(Integer tid);
+
+	int insertTuuid(DbTeacher dbTeacher);
 
 }

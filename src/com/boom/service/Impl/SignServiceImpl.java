@@ -7,6 +7,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.boom.admin.mapper.AdminDbInsignMapper;
 import com.boom.mapper.DbDayMapper;
 import com.boom.mapper.DbInSignMapper;
 import com.boom.mapper.DbTeacherMapper;
@@ -25,11 +26,14 @@ public class SignServiceImpl implements SignInService{
 	private DbDayMapper dbDayMapper;
 	@Autowired
 	private DbTeacherMapper dbTeacherMapper;
+	@Autowired
+	private AdminDbInsignMapper adminDbInsignMapper;
 	
 	@Override
 	public Result updateOk(DbTeacher dbTeacher) {
 		SimpleDateFormat dfm = new SimpleDateFormat("yyyy-MM");
 		SimpleDateFormat dfd = new SimpleDateFormat("dd");
+		SimpleDateFormat dft = new SimpleDateFormat("HH:mm:ss");
 		String day = "";
 		Calendar a = Calendar.getInstance();  
 	    a.set(Calendar.DATE, 1);//把日期设置为当月第一天  
@@ -56,6 +60,7 @@ public class SignServiceImpl implements SignInService{
 				
 				dbDay.setImonth(dfm.format(new Date()));
 				dbDay.setTid(dbTeacher.getTid());
+				dbDay.setIid(dbInSign.getIid());
 				for (int i = 1; i <= maxDate; i++) {
 					if (i < 10) {
 						dbDay.setDname(day = "0" + i);
@@ -66,22 +71,26 @@ public class SignServiceImpl implements SignInService{
 				}
 			}
 			
+			if(adminDbInsignMapper.selectByMonthTid(dbInSign).getState() == 0){
+				return Result.build(202, "签到未开启");
+			}
 			dbDay.setImonth(dfm.format(new Date()));
 			day = dfd.format(new Date());
 			dbDay.setDname(day);
 			dbDay = dbDayMapper.selectDayByStatus(dbDay);
 			if (dbDay.getStatus() == 1) {
-				return Result.build(200, "今天已经签到",dbDay.getStatus());
+				return Result.build(201, "已经签过到了",dbDay.getStatus());
 			} else if(dbDay.getStatus() == 2){
 				dbDay.setStatus(1);
+				dbDay.setDtime(dft.format(new Date())+",");
 				dbDayMapper.update(dbDay);
 				dbInSignMapper.update(dbDay);
 				return Result.build(200, "签到成功",dbDay.getStatus());
 			}else{
-				return Result.build(200, "暂时还没开启签到",dbDay.getStatus());
+				return Result.build(202, "签到还未开启",dbDay.getStatus());
 			} 
 	    }catch (Exception e) {
-			return Result.build(500, "失败");
+			return Result.build(500, "传入参数有误或者服务器错误");
 	    }
 	}
 

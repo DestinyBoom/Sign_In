@@ -1,5 +1,6 @@
 package com.boom.pojo;
 
+
 /**
  * 签到日期基本类
  * @author Administrator
@@ -18,6 +19,17 @@ public class DbDay {
 	private Integer tid;
 	
 	private Integer status;
+	
+	private Integer iid;
+	
+	private String dtime;
+	
+	@Override
+	public String toString() {
+		return "DbDay [did=" + did + ", dname=" + dname + ", imonth=" + imonth
+				+ ", sid=" + sid + ", tid=" + tid + ", status=" + status
+				+ ", iid=" + iid + "]";
+	}
 
 	public Integer getDid() {
 		return did;
@@ -65,5 +77,21 @@ public class DbDay {
 
 	public void setTid(Integer tid) {
 		this.tid = tid;
+	}
+
+	public Integer getIid() {
+		return iid;
+	}
+
+	public void setIid(Integer iid) {
+		this.iid = iid;
+	}
+
+	public String getDtime() {
+		return dtime;
+	}
+
+	public void setDtime(String dtime) {
+		this.dtime = dtime;
 	}
 }

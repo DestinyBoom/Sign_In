@@ -1,6 +1,9 @@
 package com.boom.admin.mapper;
 
+import java.util.List;
+
 import com.boom.pojo.DbInSign;
+import com.boom.pojo.DbInSignCustomer;
 
 public interface AdminDbInsignMapper {
 
@@ -11,5 +14,9 @@ public interface AdminDbInsignMapper {
 	int updateState(DbInSign dbInSign);
 
 	int updateShouldSign(DbInSign dbInSign);
+
+	int updateCloseSign(DbInSign dbInSign);
+
+	List<DbInSignCustomer> findTByMonth(DbInSignCustomer dbInSignCustomer);
 
 }

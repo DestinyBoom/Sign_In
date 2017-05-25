@@ -8,6 +8,6 @@ package com.boom.utils;
 public class Const {
     
 	//分页每页显示数据
-	public final static int PAGE = 10;
+	public final static int PAGE = 20;
 
 }

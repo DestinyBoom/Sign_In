@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.boom.admin.service.AdminClassService;
 import com.boom.pojo.DbClass;
-import com.boom.utils.PageResult;
 import com.boom.utils.Result;
 
 
@@ -30,8 +29,8 @@ public class AdminClassController {
 	//查询所有班级信息带页数
 	@ResponseBody
 	@RequestMapping(value = "/findAll.action")
-	public PageResult findAll(DbClass dbClass, Integer page) {
-		PageResult result = adminClassService.findAll(page);
+	public Result findAll() {
+		Result result = adminClassService.findAll();
 		return result;
 	}
 		

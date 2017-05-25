@@ -5,17 +5,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.boom.admin.mapper.AdminDbDayMapper">
 	
-	
-	<select id="selectDayByStatus" parameterType="com.boom.pojo.DbDay" resultType="com.boom.pojo.DbDay">
-		select * from db_day where imonth=#{imonth} and dname=#{dname} and tid=#{tid}
-	</select>
-	
 	<insert id="insert" parameterType="com.boom.pojo.DbDay">
-		insert into db_day(dname,imonth,tid) values(#{dname},#{imonth},#{tid})
+		insert into db_day(dname,imonth,tid,iid) values(#{dname},#{imonth},#{tid},#{iid})
 	</insert>
 	
 	<update id="update" parameterType="com.boom.pojo.DbDay">
-		update db_day set status=#{status} where imonth=#{imonth} and dname=#{dname} and status=3 and tid=#{tid}
+		update db_day set status=#{status} where imonth=#{imonth} and dname=#{dname} and tid=#{tid}
 	</update>
 	
+	<select id="selectByIid" parameterType="int" resultType="com.boom.pojo.DbDay">
+		SELECT *FROM db_day WHERE iid = #{value}
+	</select>
+	<select id="selectByIidAndDay" parameterType="com.boom.pojo.DbDay" resultType="com.boom.pojo.DbDay">
+		SELECT *FROM db_day WHERE iid = #{iid} 
+		<if test="dname != null">
+			and dname =#{dname}
+		</if>
+	</select>
+	
+	<select id="selectByTidAndMonth" parameterType="com.boom.pojo.DbDay" resultType="com.boom.pojo.DbDay">
+		SELECT *FROM db_day WHERE tid = #{tid} AND Imonth=#{imonth}
+	</select>
+	
+	<update id="updateStatus" parameterType="com.boom.pojo.DbDay">
+		update db_day set status=#{status} where did = #{did}
+	</update>
 </mapper>

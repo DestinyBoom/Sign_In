@@ -45,14 +45,15 @@ public class AdminStudentServiceImpl implements AdminStudentService{
 	//添加学生
 	@Override
 	public Result addStudent(DbStudent dbStudent) {
-		try {
+		try {			
 			int rows = adminDbStudentMapper.addStudent(dbStudent);
 			if(rows == 0){
-				return Result.build(500, "插入失败");
+				return Result.build(501, "该学生已经存在");
+
 			}
-			return Result.ok();
+			return Result.build(200, "添加成功","无");
 		} catch (Exception e) {
-			return Result.build(500, "传入数据有误");
+			return Result.build(500, "传入参数有误或者服务器错误");
 		}
 	}
 	
@@ -62,11 +63,11 @@ public class AdminStudentServiceImpl implements AdminStudentService{
 		try {
 			int rows = adminDbStudentMapper.updateStudent(dbStudent);
 			if(rows == 0){
-				return Result.build(500, "插入失败");
+				return Result.build(501, "该学生不存在");
 			}
-			return Result.ok();
+			return Result.build(200, "修改成功","无");
 		} catch (Exception e) {
-			return Result.build(500, "传入数据有误");
+			return Result.build(500, "传入参数有误或者服务器错误");
 		}
 	}
 	
@@ -76,17 +77,21 @@ public class AdminStudentServiceImpl implements AdminStudentService{
 		try {
 			int rows = adminDbStudentMapper.deleteStudent(ids);
 			if(rows == 0){
-				return Result.build(500, "删除失败可能已经删除过该id");
+				return Result.build(501, "该学生不存在,该id无效");
 			}
-			return Result.ok();
+			return Result.build(200, "删除成功","无");
 		} catch (Exception e) {
-			return Result.build(500, "传入数据有误");
+			return Result.build(500, "传入参数有误或者服务器错误");
 		}
 	}
 	
 	//高级搜索
 	@Override
 	public PageResult selectStudent(DbStudentCustomer dbStudentCustomer, Integer page) {
+		if(page == null || page < 0){
+			page = 1;
+		}
+		
 		//分页
 		PageHelper.startPage(page, Const.PAGE);
 		PageResult result = new PageResult();

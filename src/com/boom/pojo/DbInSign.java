@@ -24,7 +24,7 @@ public class DbInSign {
 		return "DbInSign [iid=" + iid + ", imonth=" + imonth + ", aid=" + aid
 				+ ", cid=" + cid + ", sid=" + sid + ", tid=" + tid
 				+ ", ishouldSign=" + ishouldSign + ", irealitySign="
-				+ irealitySign + ", ileaveDaysSign=" + ileaveDaysSign + "]";
+				+ irealitySign + ", ileaveDaysSign=" + ileaveDays + "]";
 	}
 
 	private Integer tid;
@@ -33,7 +33,7 @@ public class DbInSign {
 	
 	private Integer irealitySign;
 	
-	private Integer ileaveDaysSign;
+	private Integer ileaveDays;
 
 	public Integer getIid() {
 		return iid;
@@ -91,12 +91,12 @@ public class DbInSign {
 		this.irealitySign = irealitySign;
 	}
 
-	public Integer getIleaveDaysSign() {
-		return ileaveDaysSign;
+	public Integer getIleaveDays() {
+		return ileaveDays;
 	}
 
-	public void setIleaveDaysSign(Integer ileaveDaysSign) {
-		this.ileaveDaysSign = ileaveDaysSign;
+	public void setIleaveDays(Integer ileaveDays) {
+		this.ileaveDays = ileaveDays;
 	}
 
 	public Integer getTid() {

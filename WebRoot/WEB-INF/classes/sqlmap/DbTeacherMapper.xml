@@ -17,7 +17,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertTeacher" parameterType="com.boom.pojo.DbTeacher">
 		insert into db_teacher (tnumber,tpass,tuuid) values (#{tnumber}, #{tpass}, #{tuuid})
 	</insert>
-	
+	<update id="insertTuuid" parameterType="com.boom.pojo.DbTeacher">
+		update db_teacher set tuuid=#{tuuid} where tnumber=#{tnumber}
+	</update>
 	<!-- 保存学生 -->
 	<update id="saveTeacher" parameterType="com.boom.pojo.DbTeacher">
 		update db_teacher 

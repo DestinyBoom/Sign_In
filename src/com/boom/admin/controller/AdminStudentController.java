@@ -47,7 +47,7 @@ public class AdminStudentController {
 	//修改学生信息
 	@RequestMapping("/update.action")
     @ResponseBody
-    public Result updateBusiness(DbStudent dbStudent) {
+    public Result updateStudent(DbStudent dbStudent) {
         Result result = adminstudentService.updateStudent(dbStudent);
         return result;
     }

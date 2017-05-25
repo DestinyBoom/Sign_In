@@ -21,13 +21,116 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<!-- 查询所有老师信息 -->
+	<select id="getAll" resultType="com.boom.pojo.DbTeacher">
+		SELECT * FROM db_teacher
+	</select>
+	
+	<!-- 查询所有学生信息 -->
 	<select id="findAll" resultMap="DbTeacherCustomerResultMap">
 		SELECT
-			db_Teacher.*,
+			db_teacher.*,
 			db_academy.aname
 		FROM
-			db_Teacher,
+			db_teacher,
 			db_academy
-		WHERE db_Teacher.aid = db_academy.aid
+		WHERE db_teacher.aid = db_academy.aid 
+	</select>
+	
+	<!-- 添加学生 -->
+	<insert id="addTeacher" parameterType="com.boom.pojo.DbTeacher">
+		insert into db_teacher
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="tname != null" >
+	        tname,
+	      </if>
+	      <if test="tnumber != null" >
+	        tnumber,
+	      </if>
+	      <if test="tsex != null" >
+	        tsex,
+	      </if>
+	      <if test="tage != null" >
+	        tage,
+	      </if>
+	      <if test="aid != null" >
+	        aid,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="tname != null" >
+	        #{tname},
+	      </if>
+	      <if test="tnumber != null" >
+	        #{tnumber},
+	      </if>
+	      <if test="tsex != null" >
+	        #{tsex},
+	      </if>
+	      <if test="tage != null" >
+	        #{tage},
+	      </if>
+	      <if test="aid != null" >
+	        #{aid},
+	      </if>
+	    </trim>
+	</insert>
+	
+	<!-- 修改学生信息 -->
+	<update id="updateTeacher" parameterType="com.boom.pojo.DbTeacher">
+		update db_teacher 
+		<set>
+	      <if test="tname != null" >
+	        tname = #{tname},
+	      </if>
+	      <if test="tnumber != null" >
+	        tnumber = #{tnumber},
+	      </if>
+	      <if test="tsex != null" >
+	        tsex = #{tsex},
+	      </if>
+	      <if test="tage != null" >
+	        tage = #{tage},
+	      </if>
+	      <if test="aid != null" >
+	        aid = #{aid},
+	      </if>
+	    </set>
+	    where tid = #{tid}
+	</update>
+	
+	<!-- 删除学生信息 -->
+	<delete id="deleteTeacher">
+    	delete from db_teacher where tid in
+    	<foreach collection="array" open="(" close=")" separator="," item="ids">
+            #{ids}
+        </foreach>
+  	</delete>
+  	
+  	<!-- 多条件组合查询学生信息 -->
+	<select id="selectTeacher" parameterType="com.boom.pojo.DbTeachercustomer" resultMap="DbTeacherCustomerResultMap">
+		SELECT 
+			db_teacher.*,
+			db_academy.aname
+		FROM
+			db_teacher,
+			db_academy
+		<where>
+		<if test="tname != null">
+			and tname like '%${tname}%'
+		</if>
+		<if test="tnumber !=null">
+			and tnumber like '%${tnumber}%'
+		</if>
+		<if test="tsex != null">
+			and tsex = #{tsex}
+		</if>
+		<if test="tage !=null">
+			and tage like '%${tage}%'
+		</if>
+		<if test="aid != null">
+			and db_teacher.aid = #{aid}
+		</if>	
+			AND db_teacher.aid = db_academy.aid
+		</where>
 	</select>
 </mapper>

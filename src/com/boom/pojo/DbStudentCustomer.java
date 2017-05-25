@@ -21,7 +21,7 @@ public class DbStudentCustomer extends DbStudent{
 	public void setDbClass(DbClass dbClass) {
 		this.dbClass = dbClass;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "DbStudentCustomer [dbAcademy=" + dbAcademy + ", dbClass="

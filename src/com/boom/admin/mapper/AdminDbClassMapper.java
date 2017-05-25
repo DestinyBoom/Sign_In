@@ -3,7 +3,6 @@ package com.boom.admin.mapper;
 import java.util.List;
 
 import com.boom.pojo.DbClass;
-import com.boom.pojo.DbStudent;
 
 /**
  * 班级管理mapper接口
@@ -13,7 +12,7 @@ import com.boom.pojo.DbStudent;
 public interface AdminDbClassMapper {
 	
 	//查
-	List<DbStudent> findAll();
+	List<DbClass> findAll();
 	
 	//增
 	int addClass(DbClass dbClass);

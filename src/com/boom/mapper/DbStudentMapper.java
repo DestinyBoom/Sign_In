@@ -15,11 +15,11 @@ public interface DbStudentMapper {
 	public DbStudent findStudentBySnumber(DbStudent dbStudent);
 	
 	//添加学生
-	public void insertStudent(DbStudent dbStudent);
+	public int insertStudent(DbStudent dbStudent);
 	
 	//保存学生信息
-	public void saveStudent(DbStudent dbStudent);
+	public int saveStudent(DbStudent dbStudent);
 	
 	//修改密码
-	public void updatepass(DbStudent dbStudent);
+	public int updatepass(DbStudent dbStudent);
 }

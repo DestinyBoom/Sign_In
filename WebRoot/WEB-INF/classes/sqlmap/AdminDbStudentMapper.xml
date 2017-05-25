@@ -14,17 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="sdate" property="sdate"/>
 		<result column="isSchool" property="isSchool"/>
 		<association property="dbAcademy"  javaType="com.boom.pojo.DbAcademy">
-			<!-- id：关联查询用户的唯 一标识
-			column：指定唯 一标识用户信息的列
-			javaType：映射到user的哪个属性
-			 -->
+			
 			<id column="aid" property="aid"/>
 			<result column="aname" property="aname"/>	
 		</association>
 		<collection property="dbClass" ofType="com.boom.pojo.DbClass">
-		 	<!-- id：订单明细唯 一标识
-		 	property:要将订单明细的唯 一标识 映射到cn.itcast.mybatis.po.Orderdetail的哪个属性
-		 	  -->
+		 	
 		 	<id column="cid" property="cid"/>
 		 	<result column="cname" property="cname"/>
 		 </collection>
@@ -170,10 +165,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and sdate = #{sdate}
 		</if>
 		<if test="cid !=null">
-			and cid = #{db_class.cid}
+			and db_student.cid = #{cid}
 		</if>
 		<if test="aid != null">
-			and aid = #{db_academy.aid}
+			and db_student.aid = #{aid}
 		</if>
 		<if test="isSchool !=null">
 			and isSchool = #{isSchool}

@@ -2,6 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" 
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
 		http://www.springframework.org/schema/mvc 
@@ -11,9 +12,38 @@
 		http://www.springframework.org/schema/aop 
 		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
 		http://www.springframework.org/schema/tx 
-		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
-	
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd 
+		http://www.springframework.org/schema/task 
+		http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+		
 	<!-- 开启对service的扫描 -->
 	<context:component-scan base-package="com.boom.service,com.boom.admin.service"></context:component-scan>
 	
+	<task:scheduled-tasks>
+                  <task:scheduled ref="signTimeImpl" method="openSign" cron="00 */1 * * * ?"/>
+    </task:scheduled-tasks>
+	
+	<!-- <task:scheduled-tasks>
+                  <task:scheduled ref="adminInSignServiceImpl" method="updateOpenSign" cron="11 * * * * ?"/>
+    </task:scheduled-tasks> -->
+    
+    <!-- <task:scheduled-tasks>
+                  <task:scheduled ref="adminInSignServiceImpl" method="updateCloseSign" cron="00 01 21 * * ?"/>
+    </task:scheduled-tasks> -->
+    
+    <!-- <task:scheduled-tasks>
+                  <task:scheduled ref="adminInSignServiceImpl" method="updateOpenSign" cron="00 30 7 ? * MON-FRI"/>
+    </task:scheduled-tasks>
+    
+    <task:scheduled-tasks>
+                  <task:scheduled ref="adminInSignServiceImpl" method="updateCloseSign" cron="00 00 8 ? * MON-FRI"/>
+    </task:scheduled-tasks>
+    
+    <task:scheduled-tasks>
+                  <task:scheduled ref="adminInSignServiceImpl" method="updateOpenSign" cron="00 00 14 ? * MON-FRI"/>
+    </task:scheduled-tasks>
+    
+    <task:scheduled-tasks>
+                  <task:scheduled ref="adminInSignServiceImpl" method="updateCloseSign" cron="00 30 14 ? * MON-FRI"/>
+    </task:scheduled-tasks> -->
 </beans>

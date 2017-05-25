@@ -8,12 +8,7 @@ import org.springframework.stereotype.Service;
 import com.boom.admin.mapper.AdminDbClassMapper;
 import com.boom.admin.service.AdminClassService;
 import com.boom.pojo.DbClass;
-import com.boom.pojo.DbStudent;
-import com.boom.utils.Const;
-import com.boom.utils.PageResult;
 import com.boom.utils.Result;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 
 /**
  * 班级业务实现类
@@ -28,18 +23,13 @@ public class AdminClassServiceImpl implements AdminClassService{
 	
 	//查
 	@Override
-	public PageResult findAll(Integer page) {
-		if(page == null || page < 0){
-			page = 1;
-		}
-		//分页
-		PageHelper.startPage(page, Const.PAGE);
-		PageResult result = new PageResult();
-		List<DbStudent> list = adminDbClassMapper.findAll();
-		result.setRows(list);
-		PageInfo<DbStudent> pageInfo = new PageInfo<DbStudent>(list);
-		result.setTotal(pageInfo.getTotal());
-		return result;
+	public Result findAll() {
+		try {
+			List<DbClass> list = adminDbClassMapper.findAll();
+			return Result.build(200, "查询成功",list);
+		} catch (Exception e) {
+			return Result.build(500, "传入参数有误或者服务器错误");
+		}	
 	}
 	
 	//增
@@ -48,11 +38,11 @@ public class AdminClassServiceImpl implements AdminClassService{
 		try {
 			int rows = adminDbClassMapper.addClass(dbClass);
 			if(rows == 0){
-				return Result.build(500, "插入失败");
+				Result.build(501, "该班级已经存在");
 			}
-			return Result.ok();
+			return Result.build(200, "添加成功","无");
 		} catch (Exception e) {
-			return Result.build(500, "传入数据有误");
+			return Result.build(500, "传入参数有误或者服务器错误");
 		}
 	}
 	
@@ -62,11 +52,11 @@ public class AdminClassServiceImpl implements AdminClassService{
 		try {
 			int rows = adminDbClassMapper.updateClass(dbClass);
 			if(rows == 0){
-				return Result.build(500, "插入失败");
+				return Result.build(501, "该班级不存在");
 			}
-			return Result.ok();
+			return Result.build(200, "修改成功","无");
 		} catch (Exception e) {
-			return Result.build(500, "传入数据有误");
+			return Result.build(500, "传入参数有误或者服务器错误");
 		}
 	}
 	
@@ -76,11 +66,11 @@ public class AdminClassServiceImpl implements AdminClassService{
 		try {
 			int rows = adminDbClassMapper.deleteClass(ids);
 			if(rows == 0){
-				return Result.build(500, "删除失败可能已经删除过该id");
+				return Result.build(501, "该班级不存在,该id无效");
 			}
-			return Result.ok();
+			return Result.build(200, "删除成功","无");
 		} catch (Exception e) {
-			return Result.build(500, "传入数据有误");
+			return Result.build(500, "传入参数有误或者服务器错误");
 		}
 	}
 
