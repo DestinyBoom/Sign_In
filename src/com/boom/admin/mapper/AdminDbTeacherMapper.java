@@ -19,5 +19,7 @@ public interface AdminDbTeacherMapper {
 
 	List<DbTeachercustomer> selectTeacher(DbTeachercustomer dbTeachercustomer);
 
+	DbTeachercustomer selectByTid(Integer tid);
+
 }
  

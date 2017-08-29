@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.boom.admin.service.AdminInSignService;
 import com.boom.pojo.DbDay;
+import com.boom.pojo.DbDayCustomer;
 import com.boom.pojo.DbInSignCustomer;
 import com.boom.utils.PageResult;
 import com.boom.utils.Result;
+import com.github.pagehelper.PageInfo;
 
 /**
  * 管理员管理签到接口
@@ -47,11 +49,24 @@ public class AdminInSignController {
 		return result;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/findAll.action")
+	public PageResult findAll(Integer page) {
+		PageResult result = adminInSignService.findAll(page);
+		return result;
+	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/updateStatus.action")
 	public Result updateStatus(DbDay dbDay) {
 		Result result = adminInSignService.updateStatus(dbDay);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/findInsignToady.action")
+	public PageInfo<DbDayCustomer> findInsignToady(Integer page) {
+		PageInfo<DbDayCustomer> result = adminInSignService.findInsignToady(page);
 		return result;
 	}
 }

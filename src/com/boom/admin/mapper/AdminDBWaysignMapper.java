@@ -10,4 +10,8 @@ public interface AdminDBWaysignMapper {
 
 	int updateWaysign(DbWaysign dbWaysign);
 
+	void updateWaysignStatedel(int i);
+
+	void updateWaysignState(int i);
+
 }

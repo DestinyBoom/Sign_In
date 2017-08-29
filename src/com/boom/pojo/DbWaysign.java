@@ -13,7 +13,9 @@ public class DbWaysign {
 	private Integer mode;
 	
 	private String mac;
-
+	
+	private Integer state;
+	
 	public Integer getWid() {
 		return wid;
 	}
@@ -61,4 +63,14 @@ public class DbWaysign {
 	public void setMac(String mac) {
 		this.mac = mac;
 	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+	
+	
 }

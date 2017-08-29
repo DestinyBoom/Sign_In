@@ -10,6 +10,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM db_academy
 	</select>
 	
+	<select id="findByAid" resultType="com.boom.pojo.DbAcademy" parameterType="java.lang.Integer">
+		SELECT * FROM db_academy where aid = #{value}
+	</select>
+	
 	<!-- 添加学院 -->
 	<insert id="addAcademy" parameterType="com.boom.pojo.DbAcademy">
 		insert into db_academy (aname) VALUES (#{aname})

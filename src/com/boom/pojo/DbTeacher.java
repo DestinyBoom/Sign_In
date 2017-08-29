@@ -1,5 +1,7 @@
 package com.boom.pojo;
 
+import javax.persistence.criteria.CriteriaBuilder.In;
+
 /**
  * 教师基本类
  * @author Administrator
@@ -29,7 +31,9 @@ public class DbTeacher {
 	private Integer tage;
 	
 	private Integer aid;
-
+	
+	private Boolean isUnbundling;
+	
 	public Integer getTid() {
 		return tid;
 	}
@@ -93,6 +97,15 @@ public class DbTeacher {
 	public void setAid(Integer aid) {
 		this.aid = aid;
 	}
+
+	public Boolean getIsUnbundling() {
+		return isUnbundling;
+	}
+
+	public void setIsUnbundling(Boolean isUnbundling) {
+		this.isUnbundling = isUnbundling;
+	}
+
 	
 	
 }

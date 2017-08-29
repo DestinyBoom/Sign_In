@@ -22,4 +22,6 @@ public interface AdminDbAcademyMapper {
 	
 	//删除学院
 	public int deleteAcademy(String[] ids);
+	
+	DbAcademy findByAid(Integer aid);
 }

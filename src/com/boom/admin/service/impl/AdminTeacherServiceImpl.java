@@ -83,10 +83,12 @@ public class AdminTeacherServiceImpl implements AdminTeacherService{
 			page = 1;
 		}
 		//分页
+		List<DbTeachercustomer> list2 = adminDbTeacherMapper.selectTeacher(dbTeachercustomer);
+		System.out.println(list2.toString());
 		PageHelper.startPage(page, Const.PAGE);
 		PageResult result = new PageResult();
 		List<DbTeachercustomer> list = adminDbTeacherMapper.selectTeacher(dbTeachercustomer);
-		System.out.println(list);
+		System.out.println(list.toString());
 		result.setRows(list);
 		PageInfo<DbTeachercustomer> pageInfo = new PageInfo<DbTeachercustomer>(list);
 		result.setTotal(pageInfo.getTotal());

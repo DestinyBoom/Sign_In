@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<resultMap id="InsignResultMap" type="com.boom.pojo.DbInSignCustomer">
 		<id column="iid" property="iid"/>
-		<result column="imonth" property="ishouldSign"/>
+		<result column="imonth" property="imonth"/>
 		<result column="ishouldSign" property="ishouldSign"/>
 		<result column="irealitySign" property="irealitySign"/>
 		<result column="ileaveDays" property="ileaveDays"/>	
@@ -69,5 +69,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND db_insign.imonth= '${imonth}'	
 	</select>
 	
-	
+	<select id="findAll" parameterType="com.boom.pojo.DbInSignCustomer" resultMap="InsignResultMap">
+		SELECT
+			db_insign.*,
+			db_teacher.*,
+			db_academy.aname		
+		FROM
+			db_insign,
+			db_teacher,
+			db_academy	
+		WHERE
+		db_insign.aid = db_academy.aid
+		AND db_insign.tid = db_teacher.tid 
+		ORDER BY `imonth` DESC 	
+	</select>
 </mapper>

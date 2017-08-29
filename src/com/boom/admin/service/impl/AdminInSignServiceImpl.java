@@ -9,11 +9,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.boom.admin.mapper.AdminDBWaysignMapper;
+import com.boom.admin.mapper.AdminDbAcademyMapper;
 import com.boom.admin.mapper.AdminDbDayMapper;
 import com.boom.admin.mapper.AdminDbInsignMapper;
+import com.boom.admin.mapper.AdminDbOperateMapper;
 import com.boom.admin.mapper.AdminDbTeacherMapper;
 import com.boom.admin.service.AdminInSignService;
 import com.boom.pojo.DbDay;
+import com.boom.pojo.DbDayCustomer;
 import com.boom.pojo.DbInSign;
 import com.boom.pojo.DbInSignCustomer;
 import com.boom.pojo.DbTeacher;
@@ -33,14 +37,18 @@ public class AdminInSignServiceImpl implements AdminInSignService{
 	private AdminDbTeacherMapper adminDbTeacherMapper;
 	@Autowired
 	private AdminDbDayMapper adminDbDayMapper;
-	
-	SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
-	String date = sm.format(new Date());
-	String month = date.substring(0, date.lastIndexOf("-"));
-	String day = date.substring(date.lastIndexOf("-") + 1);
+	@Autowired
+	private AdminDbAcademyMapper adminDbAcademyMapper;
+	@Autowired
+	private AdminDBWaysignMapper adminDBWaysignMapper;
 	
 	@Override
 	public Result updateOpenSign() {
+		
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sm.format(new Date());
+		String month = date.substring(0, date.lastIndexOf("-"));
+		String day = date.substring(date.lastIndexOf("-") + 1);
 		
 		Calendar a = Calendar.getInstance();  
 	    a.set(Calendar.DATE, 1);//把日期设置为当月第一天  
@@ -145,6 +153,7 @@ public class AdminInSignServiceImpl implements AdminInSignService{
 				}
 					
 			}
+			adminDBWaysignMapper.updateWaysignState(1);
 			return Result.build(200, "开启签到成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,6 +165,11 @@ public class AdminInSignServiceImpl implements AdminInSignService{
 	@Override
 	public Result updateCloseSign() {
 		try {
+			SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+			String date = sm.format(new Date());
+			String month = date.substring(0, date.lastIndexOf("-"));
+			//String day = date.substring(date.lastIndexOf("-") + 1);
+			
 			List<DbTeacher> list = adminDbTeacherMapper.getAll();
 			DbInSign dbInSign = new DbInSign();
 			dbInSign.setImonth(month);
@@ -170,6 +184,7 @@ public class AdminInSignServiceImpl implements AdminInSignService{
 					return Result.build(501, "修改数据失败");
 				}
 			}
+			adminDBWaysignMapper.updateWaysignStatedel(1);
 			return Result.build(200, "关闭签到成功");
 		} catch (Exception e) {
 			return Result.build(500, "传入参数有误或者服务器错误");
@@ -179,13 +194,19 @@ public class AdminInSignServiceImpl implements AdminInSignService{
 	@Override
 	public PageResult findTByMonthAndDay(DbInSignCustomer dbInSignCustomer,
 			Integer page) {
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sm.format(new Date());
+		String month = date.substring(0, date.lastIndexOf("-"));
+		String day = date.substring(date.lastIndexOf("-") + 1);
+		
 		DbDay dbDay = new DbDay();
 		if(page == null || page < 0){
 			page = 1;
 		}
 
 		if(dbInSignCustomer.getImonth() == null ){
-			dbInSignCustomer.setImonth(month);	
+			dbInSignCustomer.setImonth(month);
+			dbDay.setDname(day);
 		}else{
 			if(dbInSignCustomer.getDay() != null ){
 				dbDay.setDname(dbInSignCustomer.getDay().getDname());
@@ -251,6 +272,70 @@ public class AdminInSignServiceImpl implements AdminInSignService{
 		} catch (Exception e) {
 			return Result.build(500, "传入参数有误或者服务器错误");
 		}
+	}
+
+	@Override
+	public PageResult findAll(Integer page) {
+		if(page == null || page < 0){
+			page = 1;
+		}
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sm.format(new Date());
+		String month = date.substring(0, date.lastIndexOf("-"));
+		String day = date.substring(date.lastIndexOf("-") + 1);
+		//分页
+		PageHelper.startPage(page, Const.PAGE);
+		PageResult result = new PageResult();
+		List<DbInSignCustomer> list = adminDbInsignMapper.findAll();
+		List<DbInSignCustomer> ls = new ArrayList<DbInSignCustomer>();
+		
+		for(DbInSignCustomer dbInSignCustomer:list){
+			List<DbDay> dbDays = adminDbDayMapper.selectDxByIid(dbInSignCustomer.getIid());
+			List<DbDay> ld = new ArrayList<DbDay>();
+			for(DbDay dbDay:dbDays){
+				if(dbDay.getImonth().equals(month)){
+					if(Integer.parseInt(dbDay.getDname()) <= Integer.parseInt(day)){
+						ld.add(dbDay);
+					}
+				}else{
+					ld.add(dbDay);
+				}
+			}
+			System.out.println(ld);
+			dbInSignCustomer.setDbDay(ld);
+			ls.add(dbInSignCustomer);
+			result.setRows(ls);
+			PageInfo<DbInSignCustomer> pageInfo = new PageInfo<DbInSignCustomer>(list);
+			result.setTotal(pageInfo.getTotal());
+		}
+		return result;
+	}
+
+	@Override
+	public PageInfo<DbDayCustomer> findInsignToady(Integer page) {
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sm.format(new Date());
+		String month = date.substring(0, date.lastIndexOf("-"));
+		String day = date.substring(date.lastIndexOf("-") + 1);
+		
+		DbDay dbDay = new DbDay();
+		
+		if(page == null || page < 0){
+			page = 1;
+		}
+
+		//分页
+		PageHelper.startPage(page, Const.PAGE);
+		
+		dbDay.setImonth(month);
+		dbDay.setDname(day);
+		List<DbDayCustomer> dbDays = adminDbDayMapper.selectByIidAndDay_SignIn(dbDay);
+		for(DbDayCustomer dbd : dbDays){
+			DbTeachercustomer dbTeacher = adminDbTeacherMapper.selectByTid(dbd.getTid()); 
+			dbTeacher.setDbAcademy(adminDbAcademyMapper.findByAid(dbTeacher.getAid()));
+			dbd.setDbTeacher(dbTeacher);
+		}
+		return new PageInfo<DbDayCustomer>(dbDays);
 	}	
 
 }

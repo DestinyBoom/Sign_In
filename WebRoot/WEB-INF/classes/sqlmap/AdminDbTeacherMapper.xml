@@ -10,6 +10,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="tnumber" property="tnumber"/>
 		<result column="tsex" property="tsex"/>
 		<result column="tage" property="tage"/>
+		<result column="aid" property="aid"/>
+		<result column="isUnbundling" property="isUnbundling"/>
+		<result column="tuuid" property="tuuid"/>
 		<association property="dbAcademy"  javaType="com.boom.pojo.DbAcademy">
 			<!-- id：关联查询用户的唯 一标识
 			column：指定唯 一标识用户信息的列
@@ -25,6 +28,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM db_teacher
 	</select>
 	
+	<select id="selectByTid" resultType="com.boom.pojo.DbTeachercustomer" parameterType="java.lang.Integer">
+		SELECT * FROM db_teacher where tid = #{value}
+	</select>
 	<!-- 查询所有学生信息 -->
 	<select id="findAll" resultMap="DbTeacherCustomerResultMap">
 		SELECT
@@ -79,11 +85,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateTeacher" parameterType="com.boom.pojo.DbTeacher">
 		update db_teacher 
 		<set>
+		
 	      <if test="tname != null" >
 	        tname = #{tname},
 	      </if>
 	      <if test="tnumber != null" >
 	        tnumber = #{tnumber},
+	      </if>
+	      <if test="tuuid != null" >
+	        tuuid = #{tuuid},
 	      </if>
 	      <if test="tsex != null" >
 	        tsex = #{tsex},
@@ -114,23 +124,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM
 			db_teacher,
 			db_academy
-		<where>
-		<if test="tname != null">
-			and tname like '%${tname}%'
-		</if>
-		<if test="tnumber !=null">
-			and tnumber like '%${tnumber}%'
-		</if>
-		<if test="tsex != null">
-			and tsex = #{tsex}
-		</if>
-		<if test="tage !=null">
-			and tage like '%${tage}%'
-		</if>
-		<if test="aid != null">
-			and db_teacher.aid = #{aid}
-		</if>	
-			AND db_teacher.aid = db_academy.aid
-		</where>
+	
+		<trim prefix="where (" prefixOverrides="or" suffix=")">
+			<if test="tname != null">
+				or tname like '%${tname}%'
+			</if>
+			<if test="tnumber !=null">
+				or tnumber like '%${tnumber}%'
+			</if>
+			<if test="tsex != null">
+				or tsex = #{tsex}
+			</if>
+			<if test="tage !=null">
+				or tage like '%${tage}%'
+			</if>
+			<if test="aid != null">
+				or db_teacher.aid = #{aid}
+			</if>
+			<if test="dbAcademy !=null">
+				or db_academy.aname like '%${dbAcademy.aname}%'
+			</if>
+		</trim>	
+			and db_teacher.aid = db_academy.aid
+		
 	</select>
 </mapper>

@@ -31,4 +31,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    where wid = #{wid}
 	</update>
 	
+	<update id="updateWaysignState" parameterType="java.lang.Integer">
+		update db_waysign set  state = 1 where wid = #{wid}
+	</update>
+	
+	<update id="updateWaysignStatedel" parameterType="java.lang.Integer">
+		update db_waysign set  state = 0 where wid = #{wid}
+	</update>
 </mapper>

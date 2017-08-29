@@ -19,4 +19,6 @@ public interface AdminDbInsignMapper {
 
 	List<DbInSignCustomer> findTByMonth(DbInSignCustomer dbInSignCustomer);
 
+	List<DbInSignCustomer> findAll();
+
 }

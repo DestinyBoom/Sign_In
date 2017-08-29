@@ -30,4 +30,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateStatus" parameterType="com.boom.pojo.DbDay">
 		update db_day set status=#{status} where did = #{did}
 	</update>
+	
+	<select id="selectDxByIid" parameterType="int" resultType="com.boom.pojo.DbDay">
+		SELECT *FROM db_day WHERE iid = #{value}
+		ORDER BY `dname` DESC
+	</select>
+	
+	<select id="selectByIidAndDay_SignIn" parameterType="com.boom.pojo.DbDay" resultType="com.boom.pojo.DbDayCustomer">
+		SELECT *FROM db_day WHERE imonth = '${imonth}' and dname = '${dname}' and dtime != ""
+	</select>
 </mapper>
