@@ -83,4 +83,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND db_insign.tid = db_teacher.tid 
 		ORDER BY `imonth` DESC 	
 	</select>
+	
+	<update id="updateRetroactiveInsign" parameterType="com.boom.pojo.DbInSign">
+		UPDATE	db_insign SET irealitySign = irealitySign + 1 WHERE tid = #{tid} AND imonth = '${imonth}'
+	</update>
 </mapper>

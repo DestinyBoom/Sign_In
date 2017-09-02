@@ -29,6 +29,11 @@
 	实际开发时使用mvc:annotation-driven
 	 -->
 	<mvc:annotation-driven></mvc:annotation-driven>
-	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/*/*.action"/>
+			<bean class="com.boom.interceptor.RoleInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 	 
 </beans>

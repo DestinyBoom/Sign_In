@@ -4,10 +4,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.boom.admin.service.AdminClassService;
+import com.boom.interceptor.Role;
 import com.boom.pojo.DbClass;
 import com.boom.utils.Result;
 
@@ -19,6 +22,7 @@ import com.boom.utils.Result;
  * @author Administrator
  *
  */
+@CrossOrigin(methods = RequestMethod.POST)
 @Controller
 @RequestMapping("/AdminClass")
 public class AdminClassController {
@@ -29,6 +33,7 @@ public class AdminClassController {
 	//查询所有班级信息带页数
 	@ResponseBody
 	@RequestMapping(value = "/findAll.action")
+	@Role(role=Role.ROLE_ADMIN)
 	public Result findAll() {
 		Result result = adminClassService.findAll();
 		return result;
@@ -37,6 +42,7 @@ public class AdminClassController {
 	//添加班级信息
 	@ResponseBody
 	@RequestMapping(value = "/add.action")
+	@Role(role=Role.ROLE_ADMIN)
 	public Result addStudent(DbClass dbClass) {
 		
 		System.out.println(dbClass);
@@ -47,6 +53,7 @@ public class AdminClassController {
 	//修改班级信息
 	@RequestMapping("/update.action")
     @ResponseBody
+    @Role(role=Role.ROLE_ADMIN)
     public Result updateBusiness(DbClass dbClass) {
         Result result = adminClassService.updateClass(dbClass);
         return result;
@@ -55,6 +62,7 @@ public class AdminClassController {
 	//删除班级
 	@RequestMapping("/delete.action")
     @ResponseBody
+    @Role(role=Role.ROLE_ADMIN)
     public Result deleteStudent(HttpServletRequest request) {
 		String[] ids=request.getParameterValues("ids");
 		System.out.println(ids);

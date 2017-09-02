@@ -28,7 +28,16 @@ public class EncodingFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
+
 		HttpServletResponse res = (HttpServletResponse) response;
+		/*res.setHeader("Access-Control-Allow-Origin", "*");
+		res.setHeader("Access-Control-Allow-Methods",
+				"POST, GET, OPTIONS, DELETE");
+		res.setHeader("Access-Control-Max-Age", "3600");
+		res.setHeader("Access-Control-Allow-Headers",
+				"x-requested-with,Authorization");
+		res.setHeader("Access-Control-Allow-Credentials", "true");*/
+
 		if (req.getMethod().equalsIgnoreCase("GET")) {
 			if (!(req instanceof GetRequest)) {
 				req = new GetRequest(req, charset);// 处理get请求编码
@@ -36,14 +45,7 @@ public class EncodingFilter implements Filter {
 		} else {
 			req.setCharacterEncoding(charset);// 处理post请求编码
 		}
-		
-        String origin = (String) request.getRemoteHost() + ":" + request.getRemotePort();
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        res.setHeader("Access-Control-Max-Age", "3600");
-        res.setHeader("Access-Control-Allow-Headers", "x-requested-with,Authorization");
-        res.setHeader("Access-Control-Allow-Credentials", "true");
-        System.out.println(origin);
+
 		chain.doFilter(req, res);
 	}
 

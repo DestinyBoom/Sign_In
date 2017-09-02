@@ -22,4 +22,6 @@ public interface AdminInSignService {
 
 	PageInfo<DbDayCustomer>findInsignToady(Integer page);
 
+	Result updateRetroactive(String month, String day, Integer tid, String time);
+
 }

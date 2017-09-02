@@ -23,4 +23,6 @@ public interface AdminDbDayMapper {
 
 	List<DbDayCustomer> selectByIidAndDay_SignIn(DbDay dbDay);
 
+	int updateRetroactiveDbDay(DbDay dbday);
+
 }

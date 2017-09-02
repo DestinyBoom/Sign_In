@@ -336,6 +336,28 @@ public class AdminInSignServiceImpl implements AdminInSignService{
 			dbd.setDbTeacher(dbTeacher);
 		}
 		return new PageInfo<DbDayCustomer>(dbDays);
+	}
+
+	@Override
+	public Result updateRetroactive(String month, String day, Integer tid,
+			String time) {
+		DbInSign dbInSign = new DbInSign();
+		dbInSign.setImonth(month);
+		dbInSign.setTid(tid);
+		
+		DbDay dbday = new DbDay();
+		dbday.setImonth(month);
+		dbday.setDname(day);
+		dbday.setTid(tid);
+		dbday.setDtime(time);
+		
+		int status = adminDbInsignMapper.updateRetroactiveInsign(dbInSign);
+		int status2 = adminDbDayMapper.updateRetroactiveDbDay(dbday);
+		if(status != 0 && status2 != 0){
+			return Result.ok();
+		}else{
+			return Result.build(5000, "修改失败");
+		}
 	}	
 
 }

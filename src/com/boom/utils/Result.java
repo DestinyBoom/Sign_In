@@ -154,4 +154,10 @@ public class Result {
         }
     
     }
+
+	@Override
+	public String toString() {
+		return "Result [status=" + status + ", msg=" + msg + ", data=" + data
+				+ "]";
+	}
 }

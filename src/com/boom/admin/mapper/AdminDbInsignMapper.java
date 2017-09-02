@@ -21,4 +21,6 @@ public interface AdminDbInsignMapper {
 
 	List<DbInSignCustomer> findAll();
 
+	int updateRetroactiveInsign(DbInSign dbInSign);
+
 }

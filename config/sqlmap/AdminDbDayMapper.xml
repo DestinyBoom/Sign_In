@@ -39,4 +39,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectByIidAndDay_SignIn" parameterType="com.boom.pojo.DbDay" resultType="com.boom.pojo.DbDayCustomer">
 		SELECT *FROM db_day WHERE imonth = '${imonth}' and dname = '${dname}' and dtime != ""
 	</select>
+	
+	<update id="updateRetroactiveDbDay" parameterType="com.boom.pojo.DbDay">
+		UPDATE db_day SET dtime = CONCAT(dtime ,'${dtime }',',') WHERE tid = #{tid } AND imonth = '${imonth }' AND dname = '${dname }' 
+	</update>
 </mapper>
