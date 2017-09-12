@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boom.admin.mapper.ErrLogMapper">
+	<insert id="insertException" parameterType="com.boom.pojo.Exception">
+	  insert into exception (date, text) values (#{date,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR})
+	</insert>
+</mapper>
