@@ -43,8 +43,8 @@ public class RoleInterceptor implements HandlerInterceptor {
 				String tokenint = request.getParameter("token");
 				Integer token = (Integer) request.getSession().getAttribute(
 						"admin");
-				System.out.println(tokenint);
-				System.out.println(token);
+				//System.out.println(tokenint);
+				//System.out.println(token);
 				if (tokenint == null || token == null) {
 					send(response, 405);
 					request.getSession().invalidate();

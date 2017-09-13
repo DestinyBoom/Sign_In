@@ -26,7 +26,7 @@ public class StudentController {
 	@ResponseBody
 	@RequestMapping(value = "/login.action", method = {RequestMethod.POST })
 	public Result login(DbStudent dbStudent) {
-		System.out.println(dbStudent);
+		//System.out.println(dbStudent);
 		return studentService.login(dbStudent);
 	}
 
@@ -34,7 +34,7 @@ public class StudentController {
 	@ResponseBody
 	@RequestMapping(value = "/regist.action", method = {RequestMethod.POST })
 	public Result regist(DbStudent dbStudent) {
-		System.out.println(dbStudent);
+		//System.out.println(dbStudent);
 		return studentService.regist(dbStudent);
 	}
 	
@@ -42,7 +42,7 @@ public class StudentController {
 	@ResponseBody
 	@RequestMapping(value = "/save.action", method = {RequestMethod.POST })
 	public Result save(DbStudent dbStudent) {
-		System.out.println(dbStudent);
+		//System.out.println(dbStudent);
 		return studentService.save(dbStudent);
 	}
 	
@@ -50,7 +50,7 @@ public class StudentController {
 	@ResponseBody
 	@RequestMapping(value = "/updatepass.action")
 	public Result updatepass(DbStudent dbStudent) {
-		System.out.println(dbStudent);
+		//System.out.println(dbStudent);
 		return studentService.updatepass(dbStudent);
 	}
 }

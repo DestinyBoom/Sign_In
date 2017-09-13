@@ -39,7 +39,7 @@ public class AdminTeacherController {
 	@Role(role=Role.ROLE_ADMIN)
 	public Result addTeacher(DbTeacher dbTeacher) {
 		
-		System.out.println(dbTeacher);
+		//System.out.println(dbTeacher);
 		Result result = adminTeacherService.addTeacher(dbTeacher);
 		return result;
 	}
@@ -59,7 +59,7 @@ public class AdminTeacherController {
     @Role(role=Role.ROLE_ADMIN)
     public Result deleteTeacher(HttpServletRequest request) {
 		String[] ids=request.getParameterValues("ids");
-		System.out.println(ids);
+		//System.out.println(ids);
 		Result result = null;
 		if(ids.length!=0){
 			result = adminTeacherService.deleteTeacher(ids);

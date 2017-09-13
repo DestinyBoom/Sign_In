@@ -94,7 +94,7 @@ public class AdminInSignServiceImpl implements AdminInSignService{
 						} else {
 							dbDay.setDname(i + "");
 						}
-						System.out.println(dbDay);
+						//System.out.println(dbDay);
 						rows = adminDbDayMapper.insert(dbDay);
 						if(rows == 0){
 							return Result.build(502, "添加数据失败了");
@@ -125,7 +125,7 @@ public class AdminInSignServiceImpl implements AdminInSignService{
 					dbDay.setDname(day);
 					dbDay.setStatus(2);
 
-					System.out.println(adminDbDayMapper.selectByTidAndMonth(dbDay));
+					//System.out.println(adminDbDayMapper.selectByTidAndMonth(dbDay));
 					if(adminDbDayMapper.selectByTidAndMonth(dbDay).size() == 0){
 						dbInSign = adminDbInsignMapper.selectByMonthTid(dbInSign);
 						dbDay.setIid(dbInSign.getIid());
@@ -136,7 +136,7 @@ public class AdminInSignServiceImpl implements AdminInSignService{
 							} else {
 								dbDay.setDname(i + "");
 							}
-							System.out.println(dbDay);
+							//System.out.println(dbDay);
 							rows = adminDbDayMapper.insert(dbDay);
 							if(rows == 0){
 								return Result.build(502, "添加数据失败了");
@@ -234,7 +234,7 @@ public class AdminInSignServiceImpl implements AdminInSignService{
 						dCustomer.setDbDay(dbDays);
 						ls.add(dCustomer);
 						
-						System.out.println(ls);
+						//System.out.println(ls);
 						result.setRows(ls);
 						PageInfo<DbInSignCustomer> pageInfo = new PageInfo<DbInSignCustomer>(list);
 						result.setTotal(pageInfo.getTotal());				
@@ -251,7 +251,7 @@ public class AdminInSignServiceImpl implements AdminInSignService{
 					dCustomer.setDbDay(dbDays);
 					ls.add(dCustomer);
 					
-					System.out.println(ls);
+					//System.out.println(ls);
 					result.setRows(ls);
 					PageInfo<DbInSignCustomer> pageInfo = new PageInfo<DbInSignCustomer>(list);
 					result.setTotal(pageInfo.getTotal());
@@ -301,7 +301,7 @@ public class AdminInSignServiceImpl implements AdminInSignService{
 					ld.add(dbDay);
 				}
 			}
-			System.out.println(ld);
+			//System.out.println(ld);
 			dbInSignCustomer.setDbDay(ld);
 			ls.add(dbInSignCustomer);
 			result.setRows(ls);

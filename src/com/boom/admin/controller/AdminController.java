@@ -30,9 +30,9 @@ public class AdminController {
 		DbAdmin adminData = adminService.findAdmin(admin);
 		if (adminData != null) {
 			int token = (int) (Math.random() * 1000000);
-			System.out.println(token);
+			//System.out.println(token);
 			request.getSession().setAttribute("admin", token);
-			System.out.println(request.getSession().getAttribute("admin"));
+			//System.out.println(request.getSession().getAttribute("admin"));
 			return Result.ok(token);
 
 		}

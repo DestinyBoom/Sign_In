@@ -61,7 +61,7 @@ public class AdminAcademyController {
     @Role(role=Role.ROLE_ADMIN)
     public Result deleteStudent(HttpServletRequest request) {
 		String[] ids=request.getParameterValues("ids");
-		System.out.println(ids);
+		//System.out.println(ids);
 		Result result = null;
 		if(ids.length!=0){
 			result = adminAcademyService.deleteAcademy(ids);

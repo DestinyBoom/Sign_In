@@ -31,7 +31,7 @@ public class SignTimeImpl {
 		if(!isWeekend(cal)){
 			try {
 				date = simpleDateFormat.parse(time);
-				System.out.println(time);
+				//System.out.println(time);
 				List<DbOperate> list = adminDbOperateMapper.findAll();
 				
 				for(DbOperate dOperate:list){
@@ -39,11 +39,11 @@ public class SignTimeImpl {
 					Date stopTime = simpleDateFormat.parse(dOperate.getStoptime());
 					if(date.getTime()==startTime.getTime()){
 						adminInSignService.updateOpenSign();
-						System.out.println(dOperate.getOname() +"开启了");
+						//System.out.println(dOperate.getOname() +"开启了");
 					}
 					if(date.getTime()==stopTime.getTime()){
 						adminInSignService.updateCloseSign();
-						System.out.println(dOperate.getOname() +"关闭了");
+						//System.out.println(dOperate.getOname() +"关闭了");
 					}	
 				}	
 			} catch (ParseException e) {

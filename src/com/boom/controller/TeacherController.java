@@ -25,7 +25,7 @@ public class TeacherController {
 	@ResponseBody
 	@RequestMapping(value = "/login.action")
 	public Result login(DbTeacher dbTeacher) {
-		System.out.println(dbTeacher);
+		//System.out.println(dbTeacher);
 		return teacherService.login(dbTeacher);
 	}
 
@@ -33,7 +33,7 @@ public class TeacherController {
 	@ResponseBody
 	@RequestMapping(value = "/regist.action")
 	public Result regist(DbTeacher dbTeacher) {
-		System.out.println(dbTeacher);
+		//System.out.println(dbTeacher);
 		return teacherService.regist(dbTeacher);
 	}
 	
@@ -41,7 +41,7 @@ public class TeacherController {
 	@ResponseBody
 	@RequestMapping(value = "/save.action")
 	public Result save(DbTeacher dbTeacher) {
-		System.out.println(dbTeacher);
+		//System.out.println(dbTeacher);
 		return teacherService.save(dbTeacher);
 	}
 	
@@ -49,7 +49,7 @@ public class TeacherController {
 	@ResponseBody
 	@RequestMapping(value = "/updatepass.action")
 	public Result updatepass(DbTeacher dbTeacher) {
-		System.out.println(dbTeacher);
+		//System.out.println(dbTeacher);
 		return teacherService.updatepass(dbTeacher);
 	}
 }

@@ -27,7 +27,7 @@ public class SignInController {
 	@ResponseBody
 	@RequestMapping("/Into.action")
 	public Result Into(DbTeacher dbTeacher) {
-		System.out.println(dbTeacher);
+		//System.out.println(dbTeacher);
 		return signInService.updateOk(dbTeacher);
 	}
 	

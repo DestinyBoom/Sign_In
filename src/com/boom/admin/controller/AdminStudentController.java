@@ -45,7 +45,7 @@ public class AdminStudentController {
 	@Role(role=Role.ROLE_ADMIN)
 	public Result addStudent(DbStudent dbStudent) {
 		
-		System.out.println(dbStudent);
+		//System.out.println(dbStudent);
 		Result result = adminstudentService.addStudent(dbStudent);
 		return result;
 	}
@@ -65,7 +65,7 @@ public class AdminStudentController {
     @Role(role=Role.ROLE_ADMIN)
     public Result deleteStudent(HttpServletRequest request) {
 		String[] ids=request.getParameterValues("ids");
-		System.out.println(ids);
+		//System.out.println(ids);
 		Result result = null;
 		if(ids.length!=0){
 			result = adminstudentService.deleteStudent(ids);

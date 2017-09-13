@@ -39,7 +39,7 @@ public class AdminTeacherServiceImpl implements AdminTeacherService{
 	@Override
 	public Result addTeacher(DbTeacher dbTeacher) {
 		try {	
-			System.out.println(dbTeacher);
+			//System.out.println(dbTeacher);
 			int rows = adminDbTeacherMapper.addTeacher(dbTeacher);
 			if(rows == 0){
 				return Result.build(501, "该老师已经存在");
@@ -84,11 +84,11 @@ public class AdminTeacherServiceImpl implements AdminTeacherService{
 		}
 		//分页
 		List<DbTeachercustomer> list2 = adminDbTeacherMapper.selectTeacher(dbTeachercustomer);
-		System.out.println(list2.toString());
+		//System.out.println(list2.toString());
 		PageHelper.startPage(page, Const.PAGE);
 		PageResult result = new PageResult();
 		List<DbTeachercustomer> list = adminDbTeacherMapper.selectTeacher(dbTeachercustomer);
-		System.out.println(list.toString());
+		//System.out.println(list.toString());
 		result.setRows(list);
 		PageInfo<DbTeachercustomer> pageInfo = new PageInfo<DbTeachercustomer>(list);
 		result.setTotal(pageInfo.getTotal());

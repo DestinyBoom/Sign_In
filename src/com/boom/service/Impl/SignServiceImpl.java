@@ -51,7 +51,7 @@ public class SignServiceImpl implements SignInService{
 			dbDay.setTid(dbTeacher.getTid());
 			if (dbInSign == null) {
 				DbInSign dbInSign2 = new DbInSign();
-				System.out.println(dbTeacher);
+				//System.out.println(dbTeacher);
 				dbInSign2.setAid(dbTeacher.getAid());
 				dbInSign2.setTid(dbTeacher.getTid());
 				dbInSign2.setImonth(dfm.format(new Date()));

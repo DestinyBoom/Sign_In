@@ -37,7 +37,7 @@ public class AdminOperateController {
 	@Role(role=Role.ROLE_ADMIN)
 	public Result addOperate(DbOperate dbOperate) {
 		
-		System.out.println(dbOperate);
+		//System.out.println(dbOperate);
 		Result result = adminOperateService.addOperate(dbOperate);
 		return result;
 	}
@@ -57,7 +57,7 @@ public class AdminOperateController {
     @Role(role=Role.ROLE_ADMIN)
     public Result deleteOperate(HttpServletRequest request) {
 		String[] ids=request.getParameterValues("ids");
-		System.out.println(ids);
+		//System.out.println(ids);
 		Result result = null;
 		if(ids.length!=0){
 			result = adminOperateService.deleteOperate(ids);

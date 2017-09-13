@@ -82,7 +82,7 @@ public class AdminDbStudentMapperTest {
 			}
 			dbStudent.setSage(20);
 			dbStudent.setIsSchool(1);
-			System.out.println(dbStudent);
+			//System.out.println(dbStudent);
 			adminDbStudentMapper.addStudent(dbStudent);
 		}
 	}

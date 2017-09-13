@@ -96,7 +96,7 @@ public class AdminStudentServiceImpl implements AdminStudentService{
 		PageHelper.startPage(page, Const.PAGE);
 		PageResult result = new PageResult();
 		List<DbStudentCustomer> list = adminDbStudentMapper.selectStudent(dbStudentCustomer);
-		System.out.println(list);
+		//System.out.println(list);
 		result.setRows(list);
 		PageInfo<DbStudentCustomer> pageInfo = new PageInfo<DbStudentCustomer>(list);
 		result.setTotal(pageInfo.getTotal());
